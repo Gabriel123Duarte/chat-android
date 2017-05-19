@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "126472560336",
+    "firebase_url": "https://chat-app-8749b.firebaseio.com",
+    "project_id": "chat-app-8749b",
+    "storage_bucket": "chat-app-8749b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126472560336:android:3554e0f0280281c2",
+        "android_client_info": {
+          "package_name": "duarte.gabriel.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126472560336-ql3s1eee8p4v7035pa37qhpc0072s8c4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "duarte.gabriel.chat",
+            "certificate_hash": "2121580de92b2b7b51b0bbbe4dea33950f66b27d"
+          }
+        },
+        {
+          "client_id": "126472560336-b0sb0gtjtrrlroppq9btopjodjckl1th.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASBtYbTNDREr4uLsXJsFIQ0C0jyGVZvj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126472560336-b0sb0gtjtrrlroppq9btopjodjckl1th.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
