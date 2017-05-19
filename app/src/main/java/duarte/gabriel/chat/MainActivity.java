@@ -1,13 +1,21 @@
 package duarte.gabriel.chat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUri = user.getPhotoUrl();
+        }
+        else
+            goLogin();
     }
 
+    private void goLogin(){
+        Intent intent = new Intent(this, LoginScreenActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

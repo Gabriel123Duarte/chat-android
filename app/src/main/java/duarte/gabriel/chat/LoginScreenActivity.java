@@ -25,6 +25,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginScreenActivity extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener {
 
@@ -61,6 +66,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    insertOnDatabase(user);
                     openMain();
 
                 } else {
@@ -94,6 +100,25 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
         finish();
     }
 
+    private void insertOnDatabase(final FirebaseUser usr){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("user");
+        myRef.orderByChild("uId").equalTo(usr.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    User user = new User(usr.getDisplayName(), usr.getEmail(), usr.getPhotoUrl().toString(), usr.getUid().toString());
+                    myRef.push().setValue(user);
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -119,6 +144,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
                 photo = photoUri.toString();
 
                 */
+
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
