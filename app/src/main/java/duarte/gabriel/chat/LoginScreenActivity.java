@@ -45,6 +45,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         //signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -135,15 +136,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
                 // Google Sign In was successful, save Token and a state then authenticate with Firebase
 
 
-                /*
-                idToken = account.getIdToken();
 
-                name = account.getDisplayName();
-                email = account.getEmail();
-                photoUri = account.getPhotoUrl();
-                photo = photoUri.toString();
-
-                */
 
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
