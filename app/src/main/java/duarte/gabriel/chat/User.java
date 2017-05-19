@@ -1,10 +1,13 @@
 package duarte.gabriel.chat;
 
+import java.io.Serializable;
+
 /**
  * Created by gabriel on 19/05/17.
  */
 
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable {
     private String name;
     private String email;
     private String photoUri;

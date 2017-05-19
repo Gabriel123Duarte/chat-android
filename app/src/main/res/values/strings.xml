@@ -2,4 +2,6 @@
     <string name="app_name">Chat</string>
     <string name="web_client_id">126472560336-ql3s1eee8p4v7035pa37qhpc0072s8c4.apps.googleusercontent.com</string>
     <string name="title_activity_main">Messages</string>
+    <string name="facebook_app_id">649576031919494</string>
+    <string name="fb_login_protocol_scheme">fb649576031919494</string>
 </resources>

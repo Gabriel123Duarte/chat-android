@@ -27,8 +27,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseUser user;
-
+    FirebaseUser myUserFirebase;
+    User myUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUri = user.getPhotoUrl();
+        myUserFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        if(myUserFirebase != null){
+            myUser = new User(myUserFirebase.getDisplayName(), myUserFirebase.getEmail(), myUserFirebase.getPhotoUrl().toString(), myUserFirebase.getUid().toString());
         }
         else
             goLogin();
@@ -103,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickedChat(User user){
-        Toast.makeText(this, user.getEmail(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, user.getEmail(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("me", myUser);
+        intent.putExtra("friend", user);
+        startActivity(intent);
+
     }
 }
