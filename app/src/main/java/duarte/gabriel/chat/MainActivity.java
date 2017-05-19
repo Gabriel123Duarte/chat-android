@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         myUserFirebase = FirebaseAuth.getInstance().getCurrentUser();
         if(myUserFirebase != null){
-            myUser = new User(myUserFirebase.getDisplayName(), myUserFirebase.getEmail(), myUserFirebase.getPhotoUrl().toString(), myUserFirebase.getUid().toString());
+            myUser = new User(myUserFirebase.getDisplayName(), myUserFirebase.getEmail(), myUserFirebase.getPhotoUrl().toString(), myUserFirebase.getUid().toString(), FirebaseInstanceId.getInstance().getToken());
         }
         else
             goLogin();
@@ -77,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     String email = (String) messageSnapshot.child("email").getValue();
                     String photo = (String) messageSnapshot.child("photoUri").getValue();
                     String uid = (String) messageSnapshot.child("uId").getValue();
-                    users.add(new User(name, email, photo, uid));
+                    String fcmId = (String) messageSnapshot.child("fcmId").getValue();
+                    users.add(new User(name, email, photo, uid, fcmId));
 
                 }
                 UserListAdapter mAdapter = new UserListAdapter(MainActivity.this, R.layout.user_list, users);

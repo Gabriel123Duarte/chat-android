@@ -12,12 +12,14 @@ public class User implements Serializable {
     private String email;
     private String photoUri;
     private String uId;
+    private String fcmId;
 
-    public User(String name, String email, String photoUri, String uId) {
+    public User(String name, String email, String photoUri, String uId, String fcmId) {
         this.name = name;
         this.email = email;
         this.photoUri = photoUri;
         this.uId = uId;
+        this.fcmId = fcmId;
     }
 
     public String getName() {
@@ -51,4 +53,7 @@ public class User implements Serializable {
     public void setuId(String uId) {
         this.uId = uId;
     }
+
+    public String getFcmId() { return fcmId; }
+    public void setFcmId(String fcmId) { this.fcmId = fcmId; }
 }

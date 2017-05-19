@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginScreenActivity extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener {
 
@@ -103,6 +104,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
                     insertOnDatabase(user);
                     openMain();
 
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -163,7 +165,7 @@ public class LoginScreenActivity extends AppCompatActivity implements  GoogleApi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()) {
-                    User user = new User(usr.getDisplayName(), usr.getEmail(), usr.getPhotoUrl().toString(), usr.getUid().toString());
+                    User user = new User(usr.getDisplayName(), usr.getEmail(), usr.getPhotoUrl().toString(), usr.getUid().toString(), FirebaseInstanceId.getInstance().getToken());
                     myRef.push().setValue(user);
                 }
 
