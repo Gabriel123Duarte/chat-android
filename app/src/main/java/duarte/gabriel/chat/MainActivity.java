@@ -12,16 +12,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseUser myUserFirebase;
     User myUser;
+    private TextView noChannelTextView;
+    private ListView channelsListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,13 +54,19 @@ public class MainActivity extends AppCompatActivity {
                 findUsers();
             }
         });
-
+        */
         myUserFirebase = FirebaseAuth.getInstance().getCurrentUser();
         if(myUserFirebase != null){
             myUser = new User(myUserFirebase.getDisplayName(), myUserFirebase.getEmail(), myUserFirebase.getPhotoUrl().toString(), myUserFirebase.getUid().toString(), FirebaseInstanceId.getInstance().getToken());
         }
         else
             goLogin();
+
+
+        channelsListView = (ListView) findViewById(R.id.chanellListView);
+        noChannelTextView = (TextView) findViewById(R.id.noChannelTextView);
+        noChannelTextView.setVisibility(View.GONE);
+        findUsers();
     }
 
     private void goLogin(){
@@ -62,12 +76,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findUsers(){
-        final Dialog dialog = new Dialog(MainActivity.this);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("user");
-        final View view = getLayoutInflater().inflate(R.layout.dialog_user_list, null);
 
-        final ListView lv = (ListView)view.findViewById(R.id.user_list);
+        final ListView lv = (ListView)findViewById(R.id.chanellListView);
         final List<User> users = new ArrayList<>();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -88,11 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         clickedChat(users.get(position));
-                        dialog.dismiss();
                     }
                 });
-                dialog.setContentView(view);
-                dialog.show();
             }
 
             @Override
